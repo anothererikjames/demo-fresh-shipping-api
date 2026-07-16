@@ -1,0 +1,15 @@
+{
+  "shipments": [
+    {
+      "shipmentId": "shp-101",
+      "status": "pending",
+      "orderId": "ord-101",
+      "carrier": "express",
+      "trackingNumber": "TRK-9000101",
+      "destinationPostalCode": "94107",
+      "estimatedDelivery": "2026-07-20T18:00:00Z",
+      "createdAt": "2026-07-16T20:00:00Z",
+      "updatedAt": "2026-07-16T20:00:00Z"
+    }
+  ]
+}

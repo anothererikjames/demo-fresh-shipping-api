@@ -1,0 +1,393 @@
+openapi: 3.0.3
+info:
+  title: Fresh Commerce Shipping API
+  version: 1.0.0
+  description: Production-shaped demo service for the Fresh Commerce API Catalog. Manages shipments with typed contracts,
+    pagination, health checks, and consistent errors.
+  contact:
+    name: Fresh Commerce Platform Team
+    email: platform@example.com
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
+servers:
+- url: https://shipping.api.fresh-commerce.test
+  description: Catalog runtime placeholder
+security:
+- bearerAuth: []
+tags:
+- name: Shipment
+  description: Manage shipments
+- name: Operations
+  description: Service health
+paths:
+  /health:
+    get:
+      tags:
+      - Operations
+      summary: Check service health
+      operationId: getShipmentServiceHealth
+      security: []
+      responses:
+        '200':
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '429':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /shipments:
+    get:
+      tags:
+      - Shipment
+      summary: List shipments
+      operationId: listShipments
+      parameters:
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Cursor'
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - pending
+          - in_transit
+          - delivered
+          - exception
+      responses:
+        '200':
+          description: Page of shipments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShipmentList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      tags:
+      - Shipment
+      summary: Create a shipment
+      operationId: createShipment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentCreate'
+      responses:
+        '201':
+          description: A shipment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /shipments/{shipmentId}:
+    parameters:
+    - $ref: '#/components/parameters/ShipmentId'
+    get:
+      tags:
+      - Shipment
+      summary: Get a shipment
+      operationId: getShipment
+      responses:
+        '200':
+          description: A shipment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    patch:
+      tags:
+      - Shipment
+      summary: Update a shipment
+      operationId: updateShipment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentUpdate'
+      responses:
+        '200':
+          description: A shipment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    delete:
+      tags:
+      - Shipment
+      summary: Delete a shipment
+      operationId: deleteShipment
+      responses:
+        '204':
+          description: Deleted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    ShipmentId:
+      name: shipmentId
+      in: path
+      required: true
+      description: Unique shipment identifier
+      schema:
+        type: string
+        minLength: 1
+      example: shp-101
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalError:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Shipment:
+      type: object
+      required:
+      - shipmentId
+      - status
+      - orderId
+      - carrier
+      - destinationPostalCode
+      - createdAt
+      - updatedAt
+      properties:
+        shipmentId:
+          type: string
+          example: shp-101
+        status:
+          type: string
+          enum:
+          - pending
+          - in_transit
+          - delivered
+          - exception
+          example: pending
+        orderId:
+          type: string
+          example: ord-101
+        carrier:
+          type: string
+          enum:
+          - postal
+          - express
+          - local_courier
+          example: express
+        trackingNumber:
+          type: string
+          example: TRK-9000101
+        destinationPostalCode:
+          type: string
+          example: '94107'
+        estimatedDelivery:
+          type: string
+          format: date-time
+          example: '2026-07-20T18:00:00Z'
+        createdAt:
+          type: string
+          format: date-time
+          example: '2026-07-16T20:00:00Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2026-07-16T20:00:00Z'
+      additionalProperties: false
+    ShipmentCreate:
+      type: object
+      required:
+      - orderId
+      - carrier
+      - destinationPostalCode
+      properties:
+        status:
+          type: string
+          enum:
+          - pending
+          - in_transit
+          - delivered
+          - exception
+          example: pending
+        orderId:
+          type: string
+          example: ord-101
+        carrier:
+          type: string
+          enum:
+          - postal
+          - express
+          - local_courier
+          example: express
+        trackingNumber:
+          type: string
+          example: TRK-9000101
+        destinationPostalCode:
+          type: string
+          example: '94107'
+        estimatedDelivery:
+          type: string
+          format: date-time
+          example: '2026-07-20T18:00:00Z'
+      additionalProperties: false
+    ShipmentUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        status:
+          type: string
+          enum:
+          - pending
+          - in_transit
+          - delivered
+          - exception
+          example: pending
+        orderId:
+          type: string
+          example: ord-101
+        carrier:
+          type: string
+          enum:
+          - postal
+          - express
+          - local_courier
+          example: express
+        trackingNumber:
+          type: string
+          example: TRK-9000101
+        destinationPostalCode:
+          type: string
+          example: '94107'
+        estimatedDelivery:
+          type: string
+          format: date-time
+          example: '2026-07-20T18:00:00Z'
+      additionalProperties: false
+    ShipmentList:
+      type: object
+      required:
+      - data
+      - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shipment'
+        meta:
+          $ref: '#/components/schemas/PageMeta'
+      additionalProperties: false
+    PageMeta:
+      type: object
+      required:
+      - limit
+      - count
+      properties:
+        limit:
+          type: integer
+          example: 20
+        count:
+          type: integer
+          example: 1
+        nextCursor:
+          type: string
+          nullable: true
+          example: null
+      additionalProperties: false
+    Health:
+      type: object
+      required:
+      - status
+      - service
+      - version
+      properties:
+        status:
+          type: string
+          enum:
+          - ok
+          example: ok
+        service:
+          type: string
+          example: shipping
+        version:
+          type: string
+          example: 1.0.0
+      additionalProperties: false
+    Error:
+      type: object
+      required:
+      - code
+      - message
+      - requestId
+      properties:
+        code:
+          type: string
+          example: not_found
+        message:
+          type: string
+          example: The requested resource was not found
+        requestId:
+          type: string
+          example: req-9f2a
+      additionalProperties: false
