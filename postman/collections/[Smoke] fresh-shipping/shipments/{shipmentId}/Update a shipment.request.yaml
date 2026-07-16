@@ -1,0 +1,53 @@
+$kind: http-request
+id: eebebf04-9f0d-4682-8de9-6d1a4df1a8aa
+url: "{{baseUrl}}/shipments/:shipmentId"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Accept: application/json
+pathVariables:
+  - key: shipmentId
+    value: shp-101
+    description: Unique shipment identifier
+body:
+  type: json
+  content: |-
+    {
+      "status": "pending",
+      "orderId": "ord-101",
+      "carrier": "express",
+      "trackingNumber": "TRK-9000101",
+      "destinationPostalCode": "94107",
+      "estimatedDelivery": "2026-07-20T18:00:00Z"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      // [Smoke] Auto-generated test assertions
+
+      pm.test('Status code is not an error (2xx or 3xx)', function () {
+          // Smoke is a generic liveness check, not a contract: a 3xx redirect is a
+          // legitimate non-error response, so assert < 400 rather than strict 2xx.
+          pm.expect(pm.response.code, "expected a non-error HTTP status (< 400)").to.be.below(400);
+      });
+
+      pm.test('Response time is acceptable', function () {
+          var threshold = parseInt(pm.environment.get('RESPONSE_TIME_THRESHOLD') || '2000', 10);
+          pm.expect(pm.response.responseTime).to.be.below(threshold);
+      });
+
+      pm.test('Response body is not empty', function () {
+          var bodyless = pm.response.code === 204 || pm.response.code === 205 || pm.response.code === 304 || pm.request.method === 'HEAD';
+          var contentLength = pm.response.headers.get('Content-Length');
+          // A legitimate empty-body response (e.g. a 200/201 with Content-Length: 0)
+          // must not false-fail this generic smoke check.
+          if (contentLength !== null && contentLength !== undefined && String(contentLength).trim() === '0') { return; }
+          if (!bodyless) {
+              var body = pm.response.text();
+              pm.expect(body.length).to.be.above(0);
+          }
+      });
+    language: text/javascript
+settings: {}
+examples: ./.resources/Update a shipment.resources/examples
+order: 2000

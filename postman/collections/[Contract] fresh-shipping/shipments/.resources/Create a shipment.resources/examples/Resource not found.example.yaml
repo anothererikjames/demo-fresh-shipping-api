@@ -1,0 +1,38 @@
+$kind: http-example
+id: be01bc71-693f-4795-aca1-63430b41405e
+request:
+  url: "{{baseUrl}}/shipments"
+  method: POST
+  headers:
+    - key: Content-Type
+      value: application/json
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  body:
+    type: json
+    content: |-
+      {
+        "orderId": "ord-101",
+        "carrier": "express",
+        "destinationPostalCode": "94107",
+        "status": "pending",
+        "trackingNumber": "TRK-9000101",
+        "estimatedDelivery": "2026-07-20T18:00:00Z"
+      }
+response:
+  statusCode: 404
+  statusText: Not Found
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "code": "not_found",
+        "message": "The requested resource was not found",
+        "requestId": "req-9f2a"
+      }
+order: 3000

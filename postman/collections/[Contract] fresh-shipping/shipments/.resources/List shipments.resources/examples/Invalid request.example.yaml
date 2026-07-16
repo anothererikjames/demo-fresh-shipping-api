@@ -1,0 +1,29 @@
+$kind: http-example
+id: f9639f96-2f4f-4af8-b525-57b00d792a1c
+request:
+  url: "{{baseUrl}}/shipments?limit=20&cursor=string&status=delivered"
+  method: GET
+  headers:
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  queryParams:
+    limit: "20"
+    cursor: string
+    status: delivered
+response:
+  statusCode: 400
+  statusText: Bad Request
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "code": "not_found",
+        "message": "The requested resource was not found",
+        "requestId": "req-9f2a"
+      }
+order: 2000

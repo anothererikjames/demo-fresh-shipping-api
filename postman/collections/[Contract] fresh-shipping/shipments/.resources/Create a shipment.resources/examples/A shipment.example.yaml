@@ -1,0 +1,44 @@
+$kind: http-example
+id: 4c860841-35a5-4073-b17c-25b1df047f87
+request:
+  url: "{{baseUrl}}/shipments"
+  method: POST
+  headers:
+    - key: Content-Type
+      value: application/json
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  body:
+    type: json
+    content: |-
+      {
+        "orderId": "ord-101",
+        "carrier": "express",
+        "destinationPostalCode": "94107",
+        "status": "pending",
+        "trackingNumber": "TRK-9000101",
+        "estimatedDelivery": "2026-07-20T18:00:00Z"
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "shipmentId": "shp-101",
+        "status": "pending",
+        "orderId": "ord-101",
+        "carrier": "express",
+        "destinationPostalCode": "94107",
+        "createdAt": "2026-07-16T20:00:00Z",
+        "updatedAt": "2026-07-16T20:00:00Z",
+        "trackingNumber": "TRK-9000101",
+        "estimatedDelivery": "2026-07-20T18:00:00Z"
+      }
+order: 1000

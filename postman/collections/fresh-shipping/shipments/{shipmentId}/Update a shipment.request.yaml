@@ -1,0 +1,25 @@
+$kind: http-request
+id: 09152eff-64bf-4d54-bdf9-8d870e0c3fb3
+url: "{{baseUrl}}/shipments/:shipmentId"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Accept: application/json
+pathVariables:
+  - key: shipmentId
+    value: shp-101
+    description: Unique shipment identifier
+body:
+  type: json
+  content: |-
+    {
+      "status": "pending",
+      "orderId": "ord-101",
+      "carrier": "express",
+      "trackingNumber": "TRK-9000101",
+      "destinationPostalCode": "94107",
+      "estimatedDelivery": "2026-07-20T18:00:00Z"
+    }
+settings: {}
+examples: ./.resources/Update a shipment.resources/examples
+order: 2000

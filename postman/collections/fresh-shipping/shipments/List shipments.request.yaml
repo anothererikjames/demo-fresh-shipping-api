@@ -1,0 +1,13 @@
+$kind: http-request
+id: 4178a893-cdc5-4999-8801-46699c2b76be
+url: "{{baseUrl}}/shipments?limit=20&cursor=string&status=delivered"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  limit: "20"
+  cursor: string
+  status: delivered
+settings: {}
+examples: ./.resources/List shipments.resources/examples
+order: 2000

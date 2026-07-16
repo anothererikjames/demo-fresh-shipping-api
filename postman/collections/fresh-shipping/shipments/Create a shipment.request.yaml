@@ -1,0 +1,21 @@
+$kind: http-request
+id: 986637ed-4437-40a0-bf31-1be2dc129d47
+url: "{{baseUrl}}/shipments"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "orderId": "ord-101",
+      "carrier": "express",
+      "destinationPostalCode": "94107",
+      "status": "pending",
+      "trackingNumber": "TRK-9000101",
+      "estimatedDelivery": "2026-07-20T18:00:00Z"
+    }
+settings: {}
+examples: ./.resources/Create a shipment.resources/examples
+order: 3000

@@ -1,0 +1,20 @@
+$kind: http-example
+id: aad79106-7397-4144-8653-d3ccc55891a9
+request:
+  url: "{{baseUrl}}/shipments/:shipmentId"
+  method: DELETE
+  headers:
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  pathVariables:
+    - key: shipmentId
+      value: shp-101
+      description: Unique shipment identifier
+response:
+  statusCode: 204
+  statusText: No Content
+  body:
+    type: text
+    content: ""
+order: 1000

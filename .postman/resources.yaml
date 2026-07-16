@@ -1,0 +1,22 @@
+workspace:
+  id: 6de85fdb-7336-4027-bb4d-c9274aee537a
+localResources:
+  collections:
+    - ../postman/collections/fresh-shipping
+    - ../postman/collections/[Smoke] fresh-shipping
+    - ../postman/collections/[Contract] fresh-shipping
+  environments:
+    - ../postman/environments/prod.postman_environment.json
+    - ../postman/environments/stage.postman_environment.json
+  specs:
+    - ../index.yaml
+cloudResources:
+  collections:
+    ../postman/collections/fresh-shipping: 56692411-d86a297e-6577-4dd1-92b5-7c917e8f31ea
+    ../postman/collections/[Smoke] fresh-shipping: 56692411-328fbf01-1a3f-462d-a7c6-244e2ad4870a
+    ../postman/collections/[Contract] fresh-shipping: 56692411-76e2c37a-8429-49b1-9a23-a685c64fc5a4
+  environments:
+    ../postman/environments/prod.postman_environment.json: 56692411-ec9aacf4-7572-44f4-b5b7-86b3ce333a8d
+    ../postman/environments/stage.postman_environment.json: 56692411-c1882c4d-17fb-4c86-bb80-7ad8c43c9d28
+  specs:
+    ../index.yaml: e12dbc74-02f7-4377-a6a9-26eafd4c6fa2

@@ -1,0 +1,55 @@
+$kind: http-example
+id: 8fe1adb4-8061-4467-83da-17e33c2ce4d1
+request:
+  url: "{{baseUrl}}/shipments?limit=20&cursor=string&status=delivered"
+  method: GET
+  headers:
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  queryParams:
+    limit: "20"
+    cursor: string
+    status: delivered
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "data": [
+          {
+            "shipmentId": "shp-101",
+            "status": "pending",
+            "orderId": "ord-101",
+            "carrier": "express",
+            "destinationPostalCode": "94107",
+            "createdAt": "2026-07-16T20:00:00Z",
+            "updatedAt": "2026-07-16T20:00:00Z",
+            "trackingNumber": "TRK-9000101",
+            "estimatedDelivery": "2026-07-20T18:00:00Z"
+          },
+          {
+            "shipmentId": "shp-101",
+            "status": "pending",
+            "orderId": "ord-101",
+            "carrier": "express",
+            "destinationPostalCode": "94107",
+            "createdAt": "2026-07-16T20:00:00Z",
+            "updatedAt": "2026-07-16T20:00:00Z",
+            "trackingNumber": "TRK-9000101",
+            "estimatedDelivery": "2026-07-20T18:00:00Z"
+          }
+        ],
+        "meta": {
+          "limit": 20,
+          "count": 1,
+          "nextCursor": null
+        }
+      }
+order: 1000

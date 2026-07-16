@@ -1,0 +1,29 @@
+$kind: http-example
+id: cf60585a-02c3-4f30-9632-de27311d1b9a
+request:
+  url: "{{baseUrl}}/shipments/:shipmentId"
+  method: DELETE
+  headers:
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  pathVariables:
+    - key: shipmentId
+      value: shp-101
+      description: Unique shipment identifier
+response:
+  statusCode: 400
+  statusText: Bad Request
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "code": "not_found",
+        "message": "The requested resource was not found",
+        "requestId": "req-9f2a"
+      }
+order: 2000
