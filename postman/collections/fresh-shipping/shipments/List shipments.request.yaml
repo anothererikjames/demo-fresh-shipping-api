@@ -3,6 +3,7 @@ id: 4178a893-cdc5-4999-8801-46699c2b76be
 url: "{{baseUrl}}/shipments?limit=20&cursor=string&status=delivered"
 method: GET
 headers:
+  X-Mock-Response-Code: "200"
   Accept: application/json
 queryParams:
   limit: "20"

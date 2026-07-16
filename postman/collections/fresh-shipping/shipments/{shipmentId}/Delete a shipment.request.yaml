@@ -3,6 +3,7 @@ id: 9859e97c-0ee3-4849-afc2-08aaf1ec8692
 url: "{{baseUrl}}/shipments/:shipmentId"
 method: DELETE
 headers:
+  X-Mock-Response-Code: "204"
   Accept: application/json
 pathVariables:
   - key: shipmentId

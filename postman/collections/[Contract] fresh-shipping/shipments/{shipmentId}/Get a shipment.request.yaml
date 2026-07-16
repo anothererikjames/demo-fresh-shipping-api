@@ -3,6 +3,7 @@ id: 09ca7c76-7b8b-4de5-ac4f-f98d4fde341e
 url: "{{baseUrl}}/shipments/:shipmentId"
 method: GET
 headers:
+  X-Mock-Response-Code: "200"
   Accept: application/json
 pathVariables:
   - key: shipmentId

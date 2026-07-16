@@ -3,6 +3,7 @@ id: 5fa55501-93c3-4738-90f2-4de26065d4ee
 url: "{{baseUrl}}/shipments"
 method: POST
 headers:
+  X-Mock-Response-Code: "201"
   Content-Type: application/json
   Accept: application/json
 body:

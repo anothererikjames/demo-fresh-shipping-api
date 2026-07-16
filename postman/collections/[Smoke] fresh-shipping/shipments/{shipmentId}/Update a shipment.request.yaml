@@ -3,6 +3,7 @@ id: eebebf04-9f0d-4682-8de9-6d1a4df1a8aa
 url: "{{baseUrl}}/shipments/:shipmentId"
 method: PATCH
 headers:
+  X-Mock-Response-Code: "200"
   Content-Type: application/json
   Accept: application/json
 pathVariables:
